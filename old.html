@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Rpg Game</title>
+  </head>
+  <body>
+    <div id="game-board">
+      <p id="msg">You Lose!!</p>
+      <div id="character"></div>
+      <div id="health-bar-border">
+        <p>Health</p>
+        <div id="health-bar"></div>
+      </div>
+      <div id="coins">
+        <p>Coins: <span id="coin-amount">0</span></p>
+      </div>
+      <div class="food"></div>
+      <div id="bad-guy-1_container" class="bad-guy_container">
+        <div class="enemy-health-bar-border">
+          <div class="enemy-name"></div>
+          <div class="enemy-health-bar"></div>
+        </div>
+        <div id="bad-guy-1" class="bad-guy"></div>
+      </div>
+      <div id="bad-guy-2_container" class="bad-guy_container">
+        <div class="enemy-health-bar-border">
+          <div class="enemy-name"></div>
+          <div class="enemy-health-bar"></div>
+        </div>
+        <div id="bad-guy-2" class="bad-guy"></div>
+      </div>
+      <div id="bad-guy-3_container" class="bad-guy_container">
+        <div class="enemy-health-bar-border">
+          <div class="enemy-name"></div>
+          <div class="enemy-health-bar"></div>
+        </div>
+        <div id="bad-guy-3" class="bad-guy"></div>
+      </div>
+      <div id="merchant"></div>
+      <div id="merchant-comment"></div>
+      <div id="store-container">
+        <h2>Marketplace</h2>
+        <p>"Here are the things I have for ssssale"</p>
+        <ul>
+          <li>
+            Health
+            <br />
+            <span>Cost: <span class="gold">1 coin</span></span>
+            <br />
+            <button id="buy-btn" class="btn">Buy</button>
+          </li>
+        </ul>
+      </div>
+      <div id="fight-options" class="">
+        <h2>What would you like to do?</h2>
+        <ul>
+          <li id="attack">Attack</li>
+          <li id="run">Run</li>
+        </ul>
+      </div>
+    </div>
+    <fieldset>
+      <legend>Controls & Stuff</legend>
+      <h4>Controls</h4>
+      <ul>
+        <li>Up Arrow: Move up</li>
+        <li>Down Arrow: Move down</li>
+        <li>Left Arrow: Move left</li>
+        <li>Right Arrow: Move right</li>
+      </ul>
+      <h4>Legend</h4>
+      <ul>
+        <li>Tiny blue dot: Food (gives health)</li>
+        <li>Blue dot: You</li>
+        <li>Pink dot: Merchant</li>
+        <li>Other dots: Enemies</li>
+      </ul>
+    </fieldset>
+  </body>
+  <script src="app.js"></script>
+</html>
