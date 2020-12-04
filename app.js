@@ -1,7 +1,7 @@
 const injector = document.querySelector("#injector");
+const body = document.querySelector("body");
 
-// HTML
-
+// Global Variables
 const small = [20, 20];
 const med = [30, 30];
 const large = [40, 40];
@@ -10,6 +10,21 @@ const slow = 5;
 const meh = 10;
 const fast = 15;
 
+// Event Listeners
+window.addEventListener(
+  "keydown",
+  function (e) {
+    // space and arrow keys
+    if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+      e.preventDefault();
+    }
+  },
+  false
+);
+
+document.onkeydown = checkKeyHandler;
+
+// Constructor
 class Character {
   constructor(name, size, color, health, speed, isEnemy, loc = [20, 20]) {
     this.name = name;
@@ -100,6 +115,22 @@ class Character {
       `#${this.name} .health-bar__inner`
     );
     characterHealth.style.width = this.health + "px";
+  }
+}
+
+// Prevents arrow keys and space from messing with the page
+
+function checkKeyHandler(e) {
+  e = e || window.event;
+
+  if (e.keyCode == "38") {
+    main.walk.up();
+  } else if (e.keyCode == "40") {
+    main.walk.down();
+  } else if (e.keyCode == "37") {
+    main.walk.left();
+  } else if (e.keyCode == "39") {
+    main.walk.right();
   }
 }
 
