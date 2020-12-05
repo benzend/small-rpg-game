@@ -133,6 +133,38 @@ class Character {
     const character = document.querySelector(`#${this.name}`);
     character.style.left = this.loc[0] + "px";
     character.style.top = this.loc[1] + "px";
+    this.isContacted();
+  }
+  isContacted() {
+    const characters = document.querySelectorAll(".character");
+    characters.forEach((character) => {
+      const left = character.style.left.replace("px", "");
+      const top = character.style.top.replace("px", "");
+      const width = character.style.width.replace("px", "");
+      const height = character.style.height.replace("px", "");
+      const intLeft = parseInt(left);
+      const intTop = parseInt(top);
+      const intWidth = parseInt(width);
+      const intRight = intLeft + intWidth;
+      const intHeight = parseInt(height);
+      const currentCharacLeft = this.loc[0];
+      const currentCharacTop = this.loc[1];
+      const currentCharacWidth = this.size[0];
+      const currentCharacHeight = this.size[1];
+      const currentCharacRight = currentCharacLeft + currentCharacWidth;
+      const currentCharacBottom = currentCharacTop + currentCharacHeight;
+      const intBottom = intTop + intHeight;
+
+      if (
+        currentCharacBottom >= intTop &&
+        currentCharacTop <= intBottom &&
+        currentCharacRight >= intLeft &&
+        currentCharacLeft <= intRight &&
+        this.name !== character.textContent
+      ) {
+        console.log("the box is making contact");
+      }
+    });
   }
   updateHealth() {
     const characterHealth = document.querySelector(
@@ -156,7 +188,7 @@ function checkKeyHandler(e) {
   }
 }
 
-const main = new Character("Ben", med, "red", 100, fast, false);
+const main = new Character("Ben", med, "red", 100, slow, false);
 const secondary = new Character("Zach", large, "blue", 100, slow, false, [
   100,
   100,
