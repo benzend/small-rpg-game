@@ -279,7 +279,7 @@ const secondary = new Character("Zach", large, "blue", 100, slow, false, [
   100,
   100,
 ]);
-const enemy = new Character("Dan", large, "green", 200, fast, true, [300, 100]);
+const enemy = new Character("Dan", large, "green", 200, meh, true, [300, 100]);
 
 main.spawn();
 secondary.spawn();
