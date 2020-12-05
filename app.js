@@ -11,7 +11,6 @@ const meh = 10;
 const fast = 15;
 
 // Event Listeners
-
 window.addEventListener(
   "keydown",
   function (e) {
@@ -83,10 +82,34 @@ class Character {
       this.updateLoc();
     },
   };
-  attack = {
-    light: () => {},
-    heavy: () => {},
-    ranged: () => {},
+  actions = {
+    shoot: () => {
+      const character = document.querySelector("#Ben");
+      const bullet = document.createElement("div");
+      bullet.className = "bullet";
+      bullet.style.borderRadius = "50%";
+      bullet.style.height = "5px";
+      bullet.style.width = "5px";
+      bullet.style.backgroundColor = this.color;
+      bullet.style.position = "relative";
+      character.append(bullet);
+      function yeet() {
+        const bullets = document.querySelectorAll(".bullet");
+        let distance = 0;
+        console.log(bullets);
+        bullets.forEach((b) => {
+          const interval = setInterval(() => {
+            b.style.left = distance + "px";
+            distance += 10;
+          }, 10);
+
+          setTimeout(() => {
+            clearInterval(interval);
+          }, 1000);
+        });
+      }
+      yeet();
+    },
   };
   gainHealth() {
     this.health += 20;
@@ -162,7 +185,7 @@ class Character {
         currentCharacLeft <= intRight &&
         this.name !== character.textContent
       ) {
-        console.log("the box is making contact");
+        console.log("main is making contact");
       }
     });
   }
@@ -185,6 +208,8 @@ function checkKeyHandler(e) {
     main.walk.left();
   } else if (e.keyCode == "39") {
     main.walk.right();
+  } else if (e.keyCode == "70") {
+    main.actions.shoot();
   }
 }
 
