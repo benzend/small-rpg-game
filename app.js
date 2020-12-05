@@ -102,7 +102,7 @@ class Character {
     const healthBar = document.createElement("div");
     const healthBarInner = document.createElement("div");
     character.id = this.name;
-    character.className = "character";
+    character.className = "character object";
     character.style.width = this.size[0] + "px";
     character.style.height = this.size[1] + "px";
     character.style.left = this.loc[0] + "px";
@@ -136,7 +136,7 @@ class Character {
     this.isContacted();
   }
   isContacted() {
-    const characters = document.querySelectorAll(".character");
+    const characters = document.querySelectorAll(".object");
     characters.forEach((character) => {
       const left = character.style.left.replace("px", "");
       const top = character.style.top.replace("px", "");
