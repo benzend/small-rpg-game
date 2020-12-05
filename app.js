@@ -90,15 +90,18 @@ class Character {
       bullet.style.borderRadius = "50%";
       bullet.style.height = "10px";
       bullet.style.width = "10px";
-      bullet.style.top = "0";
-      bullet.style.left = "0";
+      bullet.style.top = character.style.top;
+      bullet.style.left = character.style.left;
       bullet.style.backgroundColor = this.color;
       bullet.style.position = "absolute";
-      character.append(bullet);
-      let distance = 0;
+      injector.append(bullet);
+      let distance = parseInt(character.style.left.replace("px", ""));
+
+      // It's what "Animates" the bullet
       const sending = setInterval(() => {
         distance += 10;
         bullet.style.left = distance + "px";
+        this.checkIfBulletHit();
       }, 20);
       setTimeout(() => {
         clearInterval(sending);
@@ -152,8 +155,50 @@ class Character {
     character.style.top = this.loc[1] + "px";
     this.isContacted();
   }
+  checkIfBulletHit() {
+    const bullets = document.querySelectorAll(".bullet");
+    const objectsNodeList = document.querySelectorAll(".object");
+    const objects = [];
+    objectsNodeList.forEach((node) => {
+      if (!node.classList.contains("bullet")) {
+        objects.push(node);
+      }
+    });
+    bullets.forEach((bullet) => {
+      const bulletLeft = parseInt(bullet.style.left.replace("px", ""));
+      const bulletTop = parseInt(bullet.style.top.replace("px", ""));
+      const bulletWidth = parseInt(bullet.style.width.replace("px", ""));
+      const bulletHeight = parseInt(bullet.style.height.replace("px", ""));
+      const bulletRight = bulletLeft + bulletWidth;
+      const bulletBottom = bulletTop + bulletHeight;
+      objects.forEach((obj) => {
+        const objLeft = parseInt(obj.style.left.replace("px", ""));
+        const objTop = parseInt(obj.style.top.replace("px", ""));
+        const objWidth = parseInt(obj.style.width.replace("px", ""));
+        const objHeight = parseInt(obj.style.height.replace("px", ""));
+        const objRight = objLeft + objWidth;
+        const objBottom = objTop + objHeight;
+
+        console.log(
+          `Bullet: \nLeft: ${bulletLeft} \nRight: ${bulletRight} \nTop: ${bulletTop} \nBottom: ${bulletBottom} \n \nObject: ${obj.textContent} \nLeft: ${objLeft} \nRight: ${objRight} \nTop: ${objTop} \nBottom: ${objBottom} `
+        );
+
+        if (
+          bulletBottom >= objTop &&
+          bulletTop <= objBottom &&
+          bulletRight >= objLeft &&
+          bulletLeft <= objRight
+        ) {
+          console.log("hey");
+        }
+      });
+    });
+
+    // console.log(objects);
+  }
   isContacted() {
     const objects = document.querySelectorAll(".object");
+    const bullets = document.querySelectorAll(".bullet");
     objects.forEach((object) => {
       const left = object.style.left.replace("px", "");
       const top = object.style.top.replace("px", "");
@@ -181,6 +226,8 @@ class Character {
       ) {
         console.log("main is making contact");
       }
+      // Need to make something that lets you know if two separate objects are
+      // touching each other
     });
   }
   updateHealth() {
