@@ -120,7 +120,7 @@ class Character {
     this.updateHealth();
   }
   loseHealth() {
-    this.health -= 5;
+    this.health -= 0.1;
     this.updateHealth();
     if (this.health < 1) this.die();
   }
@@ -244,9 +244,15 @@ class Character {
         currentCharacLeft <= intRight &&
         this.name !== object.textContent
       ) {
-        // console.log(
-        //   `${this.name} is making contact with ${object.id || "bullets"}`
-        // );
+        console.log(
+          `${this.name} is making contact with ${object.id || "bullets"}`
+        );
+        if (object.classList.contains("food")) {
+          this.gainHealth();
+          const food = document.querySelector(`#${object.id}`);
+          console.log(this.health);
+          food.remove();
+        }
       }
     });
   }
@@ -255,6 +261,51 @@ class Character {
       `#${this.name} .health-bar__inner`
     );
     characterHealth.style.width = this.health + "px";
+  }
+}
+
+class Food {
+  constructor(id, size, loc) {
+    this.id = id;
+    this.size = size;
+    this.loc = loc;
+  }
+  madeContact() {
+    const characters = document.querySelectorAll(".character");
+    characters.forEach((character) => {
+      const characterLeft = parseInt(character.style.left.replace("px", ""));
+      const characterTop = parseInt(character.style.top.replace("px", ""));
+      const characterWidth = parseInt(character.style.width.replace("px", ""));
+      const characterHeight = parseInt(
+        character.style.height.replace("px", "")
+      );
+      const characterRight = characterLeft + characterWidth;
+      const characterBottom = characterTop + characterHeight;
+
+      if (
+        currentCharacBottom >= intTop &&
+        currentCharacTop <= intBottom &&
+        currentCharacRight >= intLeft &&
+        currentCharacLeft <= intRight &&
+        this.name !== character.textContent
+      ) {
+        // console.log(
+        //   `${this.name} is making contact with ${object.id || "bullets"}`
+        // );
+      }
+    });
+  }
+  spawn() {
+    const food = document.createElement("div");
+    food.id = this.id;
+    food.className = "food object";
+    food.style.position = "absolute";
+    food.style.width = this.size[0] + "px";
+    food.style.height = this.size[1] + "px";
+    food.style.left = this.loc[0] + "px";
+    food.style.top = this.loc[1] + "px";
+    food.style.backgroundColor = "lightGreen";
+    injector.append(food);
   }
 }
 
@@ -280,10 +331,17 @@ const secondary = new Character("Zach", large, "blue", 100, slow, false, [
   100,
 ]);
 const enemy = new Character("Dan", large, "green", 200, meh, true, [300, 100]);
+const food1 = new Food("food1", small, [300, 300]);
+const food2 = new Food("food2", small, [300, 200]);
+const food3 = new Food("food3", small, [100, 200]);
 
 main.spawn();
 secondary.spawn();
 enemy.spawn();
+food1.spawn();
+food2.spawn();
+food3.spawn();
+
 // enemy.actions.shoot();
 // secondary.actions.shoot();
 
