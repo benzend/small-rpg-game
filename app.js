@@ -84,7 +84,7 @@ class Character {
   };
   actions = {
     shoot: () => {
-      const character = document.querySelector("#Ben");
+      const character = document.querySelector(`#${this.name}`);
       const bullet = document.createElement("div");
       bullet.className = "bullet object";
       bullet.style.borderRadius = "50%";
@@ -99,7 +99,9 @@ class Character {
         parseInt(character.style.left.replace("px", "")) +
         parseInt(bullet.style.width.replace("px", "")) / 2;
 
-      // It's what "Animates" the bullet
+      // It's what "Animates" the bullet while
+      // it is checking to see if the bullet is
+      // making contact
       const sending = setInterval(() => {
         distance += 10;
         bullet.style.left = distance + "px";
@@ -118,9 +120,7 @@ class Character {
   loseHealth() {
     this.health -= 5;
     this.updateHealth();
-    if (this.health < 1) {
-      this.die();
-    }
+    if (this.health < 1) this.die();
   }
   die() {
     const character = document.querySelector(`#${this.name}`);
@@ -170,11 +170,12 @@ class Character {
     const objectsNodeList = document.querySelectorAll(".object");
     const objects = [];
     objectsNodeList.forEach((node) => {
-      if (!node.classList.contains("bullet") && node.id !== "Ben") {
+      if (!node.classList.contains("bullet")) {
         objects.push(node);
       }
     });
     bullets.forEach((bullet) => {
+      // Parameters (Hitbox)
       const bulletLeft = parseInt(bullet.style.left.replace("px", ""));
       const bulletTop = parseInt(bullet.style.top.replace("px", ""));
       const bulletWidth = parseInt(bullet.style.width.replace("px", ""));
@@ -182,6 +183,7 @@ class Character {
       const bulletRight = bulletLeft + bulletWidth;
       const bulletBottom = bulletTop + bulletHeight;
       objects.forEach((obj) => {
+        // Parameters (Hitbox)
         const objLeft = parseInt(obj.style.left.replace("px", ""));
         const objTop = parseInt(obj.style.top.replace("px", ""));
         const objWidth = parseInt(obj.style.width.replace("px", ""));
@@ -200,11 +202,16 @@ class Character {
           bulletLeft <= objRight
         ) {
           console.log("the bullet is making contact with " + obj.id);
-          if (obj.id === "Zach") {
-            secondary.loseHealth();
-          }
-          if (obj.id === "Dan") {
-            enemy.loseHealth();
+          if (obj.id !== this.name) {
+            if (obj.id === "Dan") {
+              enemy.loseHealth();
+            }
+            if (obj.id === "Ben") {
+              main.loseHealth();
+            }
+            if (obj.id === "Zach") {
+              secondary.loseHealth();
+            }
           }
         }
       });
@@ -237,7 +244,7 @@ class Character {
         currentCharacLeft <= intRight &&
         this.name !== object.textContent
       ) {
-        console.log("main is making contact");
+        console.log(`${this.name} is making contact with ${object.id}`);
       }
     });
   }
@@ -265,15 +272,16 @@ function checkKeyHandler(e) {
   }
 }
 
-const main = new Character("Ben", med, "red", 100, slow, false);
+const main = new Character("Ben", med, "red", 100, slow, false, [200, 100]);
 const secondary = new Character("Zach", large, "blue", 100, slow, false, [
   100,
   100,
 ]);
 
-const enemy = new Character("Dan", large, "green", 200, slow, true, [100, 500]);
+const enemy = new Character("Dan", large, "green", 200, slow, true, [300, 100]);
 
 main.spawn();
 main.walk.down();
 secondary.spawn();
 enemy.spawn();
+secondary.actions.shoot();
