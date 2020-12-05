@@ -106,6 +106,7 @@ class Character {
         this.checkIfBulletHit();
       }, 20);
       setTimeout(() => {
+        bullet.remove();
         clearInterval(sending);
       }, 2000);
     },
@@ -115,8 +116,15 @@ class Character {
     this.updateHealth();
   }
   loseHealth() {
-    this.health -= 20;
+    this.health -= 5;
     this.updateHealth();
+    if (this.health < 1) {
+      this.die();
+    }
+  }
+  die() {
+    const character = document.querySelector(`#${this.name}`);
+    character.remove();
   }
   spawn() {
     const character = document.createElement("div");
@@ -191,12 +199,16 @@ class Character {
           bulletRight >= objLeft &&
           bulletLeft <= objRight
         ) {
-          console.log("the bullet is making contact");
+          console.log("the bullet is making contact with " + obj.id);
+          if (obj.id === "Zach") {
+            secondary.loseHealth();
+          }
+          if (obj.id === "Dan") {
+            enemy.loseHealth();
+          }
         }
       });
     });
-
-    // console.log(objects);
   }
   isContacted() {
     const objects = document.querySelectorAll(".object");
@@ -227,8 +239,6 @@ class Character {
       ) {
         console.log("main is making contact");
       }
-      // Need to make something that lets you know if two separate objects are
-      // touching each other
     });
   }
   updateHealth() {
