@@ -86,24 +86,23 @@ class Character {
     shoot: () => {
       const character = document.querySelector("#Ben");
       const bullet = document.createElement("div");
-      bullet.className = "bullet";
+      bullet.className = "bullet object";
       bullet.style.borderRadius = "50%";
       bullet.style.height = "10px";
       bullet.style.width = "10px";
+      bullet.style.top = "0";
+      bullet.style.left = "0";
       bullet.style.backgroundColor = this.color;
       bullet.style.position = "absolute";
       character.append(bullet);
-      function yeet() {
-        let distance = 0;
-        const sending = setInterval(() => {
-          distance += 10;
-          bullet.style.left = distance + "px";
-        }, 20);
-        setTimeout(() => {
-          clearInterval(sending);
-        }, 2000);
-      }
-      yeet();
+      let distance = 0;
+      const sending = setInterval(() => {
+        distance += 10;
+        bullet.style.left = distance + "px";
+      }, 20);
+      setTimeout(() => {
+        clearInterval(sending);
+      }, 2000);
     },
   };
   gainHealth() {
@@ -154,12 +153,12 @@ class Character {
     this.isContacted();
   }
   isContacted() {
-    const characters = document.querySelectorAll(".object");
-    characters.forEach((character) => {
-      const left = character.style.left.replace("px", "");
-      const top = character.style.top.replace("px", "");
-      const width = character.style.width.replace("px", "");
-      const height = character.style.height.replace("px", "");
+    const objects = document.querySelectorAll(".object");
+    objects.forEach((object) => {
+      const left = object.style.left.replace("px", "");
+      const top = object.style.top.replace("px", "");
+      const width = object.style.width.replace("px", "");
+      const height = object.style.height.replace("px", "");
       const intLeft = parseInt(left);
       const intTop = parseInt(top);
       const intWidth = parseInt(width);
@@ -178,7 +177,7 @@ class Character {
         currentCharacTop <= intBottom &&
         currentCharacRight >= intLeft &&
         currentCharacLeft <= intRight &&
-        this.name !== character.textContent
+        this.name !== object.textContent
       ) {
         console.log("main is making contact");
       }
