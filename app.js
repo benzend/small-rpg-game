@@ -11,11 +11,13 @@ const meh = 10;
 const fast = 15;
 
 // Event Listeners
+
 window.addEventListener(
   "keydown",
   function (e) {
     // space and arrow keys
     if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+      // Prevents arrow keys and space from messing with the page
       e.preventDefault();
     }
   },
@@ -26,7 +28,16 @@ document.onkeydown = checkKeyHandler;
 
 // Constructor
 class Character {
-  constructor(name, size, color, health, speed, isEnemy, loc = [20, 20]) {
+  constructor(
+    name,
+    size,
+    color,
+    health,
+    speed,
+    isEnemy,
+    loc = [20, 20],
+    weapon = "none"
+  ) {
     this.name = name;
     this.size = size;
     this.color = color;
@@ -34,6 +45,7 @@ class Character {
     this.speed = speed;
     this.isEnemy = isEnemy;
     this.loc = loc;
+    this.weapon = weapon;
   }
   walk = {
     up: () => {
@@ -54,10 +66,22 @@ class Character {
     },
   };
   run = {
-    up: () => {},
-    right: () => {},
-    down: () => {},
-    left: () => {},
+    up: () => {
+      this.loc[1] -= this.speed * 1.4;
+      this.updateLoc();
+    },
+    right: () => {
+      this.loc[0] += this.speed * 1.4;
+      this.updateLoc();
+    },
+    down: () => {
+      this.loc[1] += this.speed * 1.4;
+      this.updateLoc();
+    },
+    left: () => {
+      this.loc[0] -= this.speed * 1.4;
+      this.updateLoc();
+    },
   };
   attack = {
     light: () => {},
@@ -118,8 +142,6 @@ class Character {
   }
 }
 
-// Prevents arrow keys and space from messing with the page
-
 function checkKeyHandler(e) {
   e = e || window.event;
 
@@ -140,6 +162,9 @@ const secondary = new Character("Zach", large, "blue", 100, slow, false, [
   100,
 ]);
 
+const enemy = new Character("Dan", large, "green", 200, slow, true, [100, 500]);
+
 main.spawn();
 main.walk.down();
 secondary.spawn();
+enemy.spawn();
