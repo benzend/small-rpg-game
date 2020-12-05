@@ -88,25 +88,20 @@ class Character {
       const bullet = document.createElement("div");
       bullet.className = "bullet";
       bullet.style.borderRadius = "50%";
-      bullet.style.height = "5px";
-      bullet.style.width = "5px";
+      bullet.style.height = "10px";
+      bullet.style.width = "10px";
       bullet.style.backgroundColor = this.color;
-      bullet.style.position = "relative";
+      bullet.style.position = "absolute";
       character.append(bullet);
       function yeet() {
-        const bullets = document.querySelectorAll(".bullet");
         let distance = 0;
-        console.log(bullets);
-        bullets.forEach((b) => {
-          const interval = setInterval(() => {
-            b.style.left = distance + "px";
-            distance += 10;
-          }, 10);
-
-          setTimeout(() => {
-            clearInterval(interval);
-          }, 1000);
-        });
+        const sending = setInterval(() => {
+          distance += 10;
+          bullet.style.left = distance + "px";
+        }, 20);
+        setTimeout(() => {
+          clearInterval(sending);
+        }, 2000);
       }
       yeet();
     },
