@@ -1,4 +1,5 @@
 const injector = document.querySelector("#injector");
+const characters = document.querySelectorAll(".character");
 const body = document.querySelector("body");
 
 // Global Variables
@@ -86,7 +87,9 @@ class Character {
     shoot: () => {
       const character = document.querySelector(`#${this.name}`);
       const bullet = document.createElement("div");
-      bullet.className = "bullet object";
+      // Added this.name as classlist so that the bullets
+      // that the character shoots are 'attached' to that character
+      bullet.className = `bullet object ${this.name}`;
       bullet.style.borderRadius = "50%";
       bullet.style.height = "10px";
       bullet.style.width = "10px";
@@ -174,6 +177,7 @@ class Character {
         objects.push(node);
       }
     });
+    // console.log(objects);
     bullets.forEach((bullet) => {
       // Parameters (Hitbox)
       const bulletLeft = parseInt(bullet.style.left.replace("px", ""));
@@ -194,24 +198,21 @@ class Character {
         // console.log(
         //   `Bullet: \nLeft: ${bulletLeft} \nRight: ${bulletRight} \nTop: ${bulletTop} \nBottom: ${bulletBottom} \n \nObject: ${obj.textContent} \nLeft: ${objLeft} \nRight: ${objRight} \nTop: ${objTop} \nBottom: ${objBottom} `
         // );
-
         if (
           bulletBottom >= objTop &&
           bulletTop <= objBottom &&
           bulletRight >= objLeft &&
           bulletLeft <= objRight
         ) {
-          console.log("the bullet is making contact with " + obj.id);
-          if (obj.id !== this.name) {
-            if (obj.id === "Dan") {
-              enemy.loseHealth();
-            }
-            if (obj.id === "Ben") {
-              main.loseHealth();
-            }
-            if (obj.id === "Zach") {
-              secondary.loseHealth();
-            }
+          // console.log("the bullet is making contact with " + obj.id);
+          if (obj.id === "Dan" && !bullet.classList.contains("Dan")) {
+            enemy.loseHealth();
+          }
+          if (obj.id === "Ben" && !bullet.classList.contains("Ben")) {
+            main.loseHealth();
+          }
+          if (obj.id === "Zach" && !bullet.classList.contains("Zach")) {
+            secondary.loseHealth();
           }
         }
       });
@@ -272,7 +273,7 @@ function checkKeyHandler(e) {
   }
 }
 
-const main = new Character("Ben", med, "red", 100, slow, false, [200, 100]);
+const main = new Character("Ben", med, "red", 100, slow, false, [200, 200]);
 const secondary = new Character("Zach", large, "blue", 100, slow, false, [
   100,
   100,
@@ -284,4 +285,59 @@ main.spawn();
 main.walk.down();
 secondary.spawn();
 enemy.spawn();
-secondary.actions.shoot();
+// enemy.actions.shoot();
+// secondary.actions.shoot();
+
+// setInterval(() => {
+//   const random = Math.floor(Math.random() * 9);
+//   if (random === 0) {
+//     secondary.walk.up();
+//   } else if (random === 1) {
+//     secondary.walk.left();
+//   } else if (random === 2) {
+//     secondary.walk.down();
+//   } else if (random === 3) {
+//     secondary.walk.right();
+//   } else if (random === 4) {
+//     secondary.actions.shoot();
+//   } else if (random === 5) {
+//     secondary.walk.up();
+//     secondary.walk.right();
+//   } else if (random === 6) {
+//     secondary.walk.right();
+//     secondary.walk.down();
+//   } else if (random === 7) {
+//     secondary.walk.down();
+//     secondary.walk.left();
+//   } else if (random === 8) {
+//     secondary.walk.left();
+//     secondary.walk.up();
+//   }
+// }, 100);
+
+// setInterval(() => {
+//   const random = Math.floor(Math.random() * 9);
+//   if (random === 0) {
+//     enemy.walk.up();
+//   } else if (random === 1) {
+//     enemy.walk.left();
+//   } else if (random === 2) {
+//     enemy.walk.down();
+//   } else if (random === 3) {
+//     enemy.walk.right();
+//   } else if (random === 4) {
+//     enemy.actions.shoot();
+//   } else if (random === 5) {
+//     enemy.walk.up();
+//     enemy.walk.right();
+//   } else if (random === 6) {
+//     enemy.walk.right();
+//     enemy.walk.down();
+//   } else if (random === 7) {
+//     enemy.walk.down();
+//     enemy.walk.left();
+//   } else if (random === 8) {
+//     enemy.walk.left();
+//     enemy.walk.up();
+//   }
+// }, 100);
