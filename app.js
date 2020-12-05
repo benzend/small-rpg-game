@@ -95,7 +95,9 @@ class Character {
       bullet.style.backgroundColor = this.color;
       bullet.style.position = "absolute";
       injector.append(bullet);
-      let distance = parseInt(character.style.left.replace("px", ""));
+      let distance =
+        parseInt(character.style.left.replace("px", "")) +
+        parseInt(bullet.style.width.replace("px", "")) / 2;
 
       // It's what "Animates" the bullet
       const sending = setInterval(() => {
@@ -160,7 +162,7 @@ class Character {
     const objectsNodeList = document.querySelectorAll(".object");
     const objects = [];
     objectsNodeList.forEach((node) => {
-      if (!node.classList.contains("bullet")) {
+      if (!node.classList.contains("bullet") && node.id !== "Ben") {
         objects.push(node);
       }
     });
@@ -179,9 +181,9 @@ class Character {
         const objRight = objLeft + objWidth;
         const objBottom = objTop + objHeight;
 
-        console.log(
-          `Bullet: \nLeft: ${bulletLeft} \nRight: ${bulletRight} \nTop: ${bulletTop} \nBottom: ${bulletBottom} \n \nObject: ${obj.textContent} \nLeft: ${objLeft} \nRight: ${objRight} \nTop: ${objTop} \nBottom: ${objBottom} `
-        );
+        // console.log(
+        //   `Bullet: \nLeft: ${bulletLeft} \nRight: ${bulletRight} \nTop: ${bulletTop} \nBottom: ${bulletBottom} \n \nObject: ${obj.textContent} \nLeft: ${objLeft} \nRight: ${objRight} \nTop: ${objTop} \nBottom: ${objBottom} `
+        // );
 
         if (
           bulletBottom >= objTop &&
@@ -189,7 +191,7 @@ class Character {
           bulletRight >= objLeft &&
           bulletLeft <= objRight
         ) {
-          console.log("hey");
+          console.log("the bullet is making contact");
         }
       });
     });
@@ -198,7 +200,6 @@ class Character {
   }
   isContacted() {
     const objects = document.querySelectorAll(".object");
-    const bullets = document.querySelectorAll(".bullet");
     objects.forEach((object) => {
       const left = object.style.left.replace("px", "");
       const top = object.style.top.replace("px", "");
