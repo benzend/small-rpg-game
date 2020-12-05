@@ -1,5 +1,4 @@
 const injector = document.querySelector("#injector");
-const characters = document.querySelectorAll(".character");
 const body = document.querySelector("body");
 
 // Global Variables
@@ -245,7 +244,9 @@ class Character {
         currentCharacLeft <= intRight &&
         this.name !== object.textContent
       ) {
-        console.log(`${this.name} is making contact with ${object.id}`);
+        // console.log(
+        //   `${this.name} is making contact with ${object.id || "bullets"}`
+        // );
       }
     });
   }
@@ -278,66 +279,70 @@ const secondary = new Character("Zach", large, "blue", 100, slow, false, [
   100,
   100,
 ]);
-
-const enemy = new Character("Dan", large, "green", 200, slow, true, [300, 100]);
+const enemy = new Character("Dan", large, "green", 200, fast, true, [300, 100]);
 
 main.spawn();
-main.walk.down();
 secondary.spawn();
 enemy.spawn();
 // enemy.actions.shoot();
 // secondary.actions.shoot();
 
-// setInterval(() => {
-//   const random = Math.floor(Math.random() * 9);
-//   if (random === 0) {
-//     secondary.walk.up();
-//   } else if (random === 1) {
-//     secondary.walk.left();
-//   } else if (random === 2) {
-//     secondary.walk.down();
-//   } else if (random === 3) {
-//     secondary.walk.right();
-//   } else if (random === 4) {
-//     secondary.actions.shoot();
-//   } else if (random === 5) {
-//     secondary.walk.up();
-//     secondary.walk.right();
-//   } else if (random === 6) {
-//     secondary.walk.right();
-//     secondary.walk.down();
-//   } else if (random === 7) {
-//     secondary.walk.down();
-//     secondary.walk.left();
-//   } else if (random === 8) {
-//     secondary.walk.left();
-//     secondary.walk.up();
-//   }
-// }, 100);
+setInterval(() => {
+  const zach = document.querySelector("#Zach");
+  if (zach) {
+    const random = Math.floor(Math.random() * 9);
+    if (random === 0) {
+      secondary.walk.up();
+    } else if (random === 1) {
+      secondary.walk.left();
+    } else if (random === 2) {
+      secondary.walk.down();
+    } else if (random === 3) {
+      secondary.walk.right();
+    } else if (random === 4) {
+      secondary.actions.shoot();
+    } else if (random === 5) {
+      secondary.walk.up();
+      secondary.walk.right();
+    } else if (random === 6) {
+      secondary.walk.right();
+      secondary.walk.down();
+    } else if (random === 7) {
+      secondary.walk.down();
+      secondary.walk.left();
+    } else if (random === 8) {
+      secondary.walk.left();
+      secondary.walk.up();
+    }
+  }
+}, 100);
 
-// setInterval(() => {
-//   const random = Math.floor(Math.random() * 9);
-//   if (random === 0) {
-//     enemy.walk.up();
-//   } else if (random === 1) {
-//     enemy.walk.left();
-//   } else if (random === 2) {
-//     enemy.walk.down();
-//   } else if (random === 3) {
-//     enemy.walk.right();
-//   } else if (random === 4) {
-//     enemy.actions.shoot();
-//   } else if (random === 5) {
-//     enemy.walk.up();
-//     enemy.walk.right();
-//   } else if (random === 6) {
-//     enemy.walk.right();
-//     enemy.walk.down();
-//   } else if (random === 7) {
-//     enemy.walk.down();
-//     enemy.walk.left();
-//   } else if (random === 8) {
-//     enemy.walk.left();
-//     enemy.walk.up();
-//   }
-// }, 100);
+setInterval(() => {
+  const dan = document.querySelector("#Dan");
+  if (dan) {
+    const random = Math.floor(Math.random() * 9);
+    if (random === 0) {
+      enemy.walk.up();
+    } else if (random === 1) {
+      enemy.walk.left();
+    } else if (random === 2) {
+      enemy.walk.down();
+    } else if (random === 3) {
+      enemy.walk.right();
+    } else if (random === 4) {
+      enemy.actions.shoot();
+    } else if (random === 5) {
+      enemy.walk.up();
+      enemy.walk.right();
+    } else if (random === 6) {
+      enemy.walk.right();
+      enemy.walk.down();
+    } else if (random === 7) {
+      enemy.walk.down();
+      enemy.walk.left();
+    } else if (random === 8) {
+      enemy.walk.left();
+      enemy.walk.up();
+    }
+  }
+}, 100);
