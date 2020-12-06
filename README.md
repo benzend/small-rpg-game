@@ -1,6 +1,29 @@
-This is a small project I've created, and possibly might work on in
-the future. I've created a character template, that, in theory, should make
-it so the person playing can choose their character type with differenting stats
-for variability, and also a template for the enemies.
+# A Vanilla JavaScript Videogame
 
+---
 
+## Links
+
+**Live**: https://benzend.github.io/small-rpg-game/
+
+---
+
+## What is it?
+
+As a simple game built with vanilla JavaScript
+
+---
+
+## What can you do?
+
+You can go around and shoot enemies. There is 'food' that you can eat to gain health. 
+
+---
+
+## Controls
+
+`Up Key`: 'move up'
+`Down Key`: 'move down'
+`Left Key`: 'move left'
+`Right Key`: 'move right'
+`F Key`: 'FIRE!!'
