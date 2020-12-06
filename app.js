@@ -35,7 +35,8 @@ class Character {
     speed,
     isEnemy,
     loc = [20, 20],
-    weapon = "none"
+    weapon = "none",
+    aimDirection = "right"
   ) {
     this.name = name;
     this.size = size;
@@ -45,23 +46,28 @@ class Character {
     this.isEnemy = isEnemy;
     this.loc = loc;
     this.weapon = weapon;
+    this.aimDirection = aimDirection;
   }
   walk = {
     up: () => {
       this.loc[1] -= this.speed;
       this.updateLoc();
+      this.changeAimDirection.up();
     },
     right: () => {
       this.loc[0] += this.speed;
       this.updateLoc();
+      this.changeAimDirection.right();
     },
     down: () => {
       this.loc[1] += this.speed;
       this.updateLoc();
+      this.changeAimDirection.down();
     },
     left: () => {
       this.loc[0] -= this.speed;
       this.updateLoc();
+      this.changeAimDirection.left();
     },
   };
   run = {
@@ -82,6 +88,20 @@ class Character {
       this.updateLoc();
     },
   };
+  changeAimDirection = {
+    up: () => {
+      this.aimDirection = "up";
+    },
+    right: () => {
+      this.aimDirection = "right";
+    },
+    down: () => {
+      this.aimDirection = "down";
+    },
+    left: () => {
+      this.aimDirection = "left";
+    },
+  };
   actions = {
     shoot: () => {
       const character = document.querySelector(`#${this.name}`);
@@ -97,22 +117,50 @@ class Character {
       bullet.style.backgroundColor = this.color;
       bullet.style.position = "absolute";
       injector.append(bullet);
-      let distance =
-        parseInt(character.style.left.replace("px", "")) +
-        parseInt(bullet.style.width.replace("px", "")) / 2;
 
       // It's what "Animates" the bullet while
       // it is checking to see if the bullet is
       // making contact
+      if (this.aimDirection === "right") {
+        bullet.animate(
+          [{ left: this.loc[0] + "px" }, { left: this.loc[0] + 1000 + "px" }],
+          {
+            duration: 1000,
+            iterations: 1,
+          }
+        );
+      } else if (this.aimDirection === "left") {
+        bullet.animate(
+          [{ left: this.loc[0] + "px" }, { left: this.loc[0] - 1000 + "px" }],
+          {
+            duration: 1000,
+            iterations: 1,
+          }
+        );
+      } else if (this.aimDirection === "up") {
+        bullet.animate(
+          [{ top: this.loc[1] + "px" }, { top: this.loc[1] - 1000 + "px" }],
+          {
+            duration: 1000,
+            iterations: 1,
+          }
+        );
+      } else if (this.aimDirection === "down") {
+        bullet.animate(
+          [{ top: this.loc[1] + "px" }, { top: this.loc[1] + 1000 + "px" }],
+          {
+            duration: 1000,
+            iterations: 1,
+          }
+        );
+      }
       const sending = setInterval(() => {
-        distance += 10;
-        bullet.style.left = distance + "px";
         this.checkIfBulletHit();
       }, 20);
       setTimeout(() => {
         bullet.remove();
         clearInterval(sending);
-      }, 2000);
+      }, 1000);
     },
   };
   gainHealth() {
@@ -179,8 +227,8 @@ class Character {
     // console.log(objects);
     bullets.forEach((bullet) => {
       // Parameters (Hitbox)
-      const bulletLeft = parseInt(bullet.style.left.replace("px", ""));
-      const bulletTop = parseInt(bullet.style.top.replace("px", ""));
+      const bulletLeft = bullet.offsetLeft;
+      const bulletTop = bullet.offsetTop;
       const bulletWidth = parseInt(bullet.style.width.replace("px", ""));
       const bulletHeight = parseInt(bullet.style.height.replace("px", ""));
       const bulletRight = bulletLeft + bulletWidth;
@@ -244,13 +292,13 @@ class Character {
         currentCharacLeft <= intRight &&
         this.name !== object.textContent
       ) {
-        console.log(
-          `${this.name} is making contact with ${object.id || "bullets"}`
-        );
+        // console.log(
+        //   `${this.name} is making contact with ${object.id || "bullets"}`
+        // );
         if (object.classList.contains("food")) {
           this.gainHealth();
           const food = document.querySelector(`#${object.id}`);
-          console.log(this.health);
+          // console.log(this.health);
           food.remove();
         }
       }
