@@ -10,7 +10,7 @@
 
 ## What is it?
 
-As a simple game built with vanilla JavaScript
+A simple video game built with vanilla JavaScript
 
 ---
 
